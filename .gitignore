@@ -1,0 +1,7 @@
+*~
+*.swp
+*.beam
+erl_crash.dump
+deps/*
+log/*
+.DS_STORE

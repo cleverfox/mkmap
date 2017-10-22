@@ -1,0 +1,11 @@
+{application, mkmap,
+ [
+  {description, "An Erlang mkmap library"},
+  {vsn, "1"},
+  {modules, [
+             mkmap
+            ]},
+  {registered, []},
+  {applications, []},
+  {env, []}
+ ]}.
