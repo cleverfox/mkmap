@@ -1,6 +1,7 @@
 -module(mkmap).
 
 -export([new/0,put/3,add_key/3,del_key/2,get/2,get/3,get_keys/2,get_all_keys/1]).
+-export([fold/3]).
 
 -ifdef(TEST).
 -include_lib("eunit/include/eunit.hrl").
@@ -86,6 +87,20 @@ del_key(Key1, Map) ->
               valmap=maps:remove(MM,Map#mkmap.valmap)
              }
     end.
+
+fold(Fun,State0,Map) ->
+    KM=Map#mkmap.keymap,
+    KV=Map#mkmap.valmap,
+    maps:fold(
+      fun(Id,Keys,Acc) ->
+              Value=maps:get(Id,KV),
+              Fun(Keys,Value,Acc)
+      end, State0, 
+      maps:fold(
+        fun(K,V,A) ->
+                maps:put(V,[K|maps:get(V,A,[])],A)
+        end, #{}, KM)
+     ).
 
 -ifdef(TEST).
 mkmap_test() ->
